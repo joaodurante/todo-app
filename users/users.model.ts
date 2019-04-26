@@ -1,5 +1,7 @@
 import * as mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 import { Task, taskSchema } from '../tasks/tasks.model';
+import { env } from '../common/environment';
 
 interface User extends mongoose.Document {
     name: string,
@@ -32,6 +34,32 @@ const userSchema = new mongoose.Schema({
         default: []
     }
 });
+
+const hashPassword = async (obj, next) => {
+    try{
+        let hash = await bcrypt.hash(obj.password, env.security.saltRounds);
+        obj.password = hash;
+        next();
+    }catch(err){
+        next(err);
+    }
+}
+
+userSchema.pre('save', function(next){
+    const user = this;
+    if(user.isModified('password'))
+        hashPassword(user, next);
+    else
+        next();
+})
+
+userSchema.pre('findOneAndUpdate', function(next){
+    const user = this;
+    if(user.getUpdate().password)
+        hashPassword(user.getUpdate(), next);
+    else
+        next();
+})
 
 const User = mongoose.model<User>('User', userSchema);
 export { User };

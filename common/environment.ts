@@ -8,5 +8,8 @@ export const env = {
             useNewUrlParser: true,
             useCreateIndex: true
         }
+    },
+    security:{
+        saltRounds: process.env.SALT_ROUNDS || 10
     }
 }
