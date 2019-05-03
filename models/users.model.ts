@@ -1,13 +1,15 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { Task, taskSchema } from '../tasks/tasks.model';
+import { Task, taskSchema } from './tasks.model';
 import { env } from '../common/environment';
 
 interface User extends mongoose.Document {
     name: string,
     email: string,
     password: string,
-    tasks: Task[]
+    tasks: Task[],
+    matches(password: string): boolean,
+    findByEmail(email: string, projection?: string)
 }
 
 const userSchema = new mongoose.Schema({
@@ -34,6 +36,19 @@ const userSchema = new mongoose.Schema({
         default: []
     }
 });
+
+/*
+ * Use methods on individual documents if you want to manipulate the individual document like adding tokens etc
+ * Use the statics approach if you want query the whole collection
+*/
+
+userSchema.methods.findByEmail = function(email: string, projection?: string){
+    return this.findOne({email: email}, projection);
+}
+
+userSchema.methods.matches = function(password: string): boolean {
+    return bcrypt.compareSync(password, this.password);
+}
 
 const hashPassword = async (obj, next) => {
     try{

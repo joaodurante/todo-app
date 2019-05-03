@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import {env} from '../common/environment';
-import { registerRouters } from './routes';
+import { registerRouters } from '../routes/routes';
 
 export class Server{
     app: express.Express;
