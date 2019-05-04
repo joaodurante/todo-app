@@ -11,7 +11,7 @@ export class Common {
         if(document)
             res.status(200).json(document);
         else
-            new httpErrors.NotFound('Document was not found');
+            throw new httpErrors.NotFound('The thing you are looking for was not found');
         return next(false);
     }
 }

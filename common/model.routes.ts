@@ -14,7 +14,7 @@ export class ModelRoutes extends Common{
         if(mongoose.Types.ObjectId.isValid(req.params._id))
             next();
         else
-            next(new httpErrors.NotFound('Document was not found'));
+            next(new httpErrors.NotFound('The thing you are looking for was not found'));
     }
 
     findAll = async (req, res, next) => {

@@ -14,6 +14,6 @@ export const env = {
         apiSecret: process.env.API_SECRET || 'todo-secret'
     },
     application:{
-        name: 'todo-app'
+        name: 'toDo-app'
     }
 }
