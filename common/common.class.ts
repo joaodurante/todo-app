@@ -3,7 +3,6 @@
 */
 
 import * as httpErrors from 'httperrors';
-import * as mongoose from 'mongoose';
 import * as express from 'express';
 
 export class Common {

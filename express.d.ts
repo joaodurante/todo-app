@@ -1,5 +1,5 @@
-import {Request} from 'express'
-import { User } from './users/users.model';
+import { Request } from 'express'
+import { User } from './models/users.model';
 
 // insert 'authenticated' property on the request
 declare global{

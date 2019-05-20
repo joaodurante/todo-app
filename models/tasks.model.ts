@@ -9,12 +9,17 @@ const taskSchema = new mongoose.Schema({
     content:{
         type: String,
         required: true,
-        maxlength: 120,
+        maxlength: 150,
         minlength: 1
     },
     date:{
         type: Date,
         required: false
+    },
+    done:{
+        type: Boolean,
+        required: true,
+        default: false
     }
 });
 

@@ -1,3 +1,4 @@
+import * as express from 'express';
 import * as httpErrors from 'httperrors';
 import * as jwt from 'jsonwebtoken';
 import { ModelRoutes } from '../common/model.routes';
@@ -29,6 +30,14 @@ export class UsersRoutes extends ModelRoutes{
                 return next(new httpErrors.Forbidden('Invalid credentials'));
         }catch(err){
             next(err);
+        }
+    }
+
+    authorize = (req, res, next) => {
+        if(req.authenticated !== undefined)
+            next();
+        else{
+            throw new httpErrors.Forbidden('You are not allowed to do this!');
         }
     }
 }

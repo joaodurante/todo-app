@@ -5,7 +5,8 @@ import { UsersRoutes } from '../controllers/users.controller';
 const router = express.Router();
 const mRoutes = new UsersRoutes(User);
 
-router.get('/', mRoutes.findAll);
+router.post('/authenticate', mRoutes.authenticate);
+router.get('/', [mRoutes.authorize, mRoutes.findAll]);
 router.get('/:_id', [mRoutes.validateId, mRoutes.findOne]);
 router.post('/', mRoutes.insert);
 router.patch('/:_id', [mRoutes.validateId, mRoutes.findAndUpdate]);

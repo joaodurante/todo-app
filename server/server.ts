@@ -4,10 +4,15 @@ import * as bodyParser from 'body-parser';
 import { env } from '../common/environment';
 import { registerRouters } from '../routes/routes';
 import { defaultLogger, errorLogger } from '../common/logger';
+import { tokenParser } from '../controllers/authorization';
 
 export class Server {
     app: express.Express;
     connection: any;
+
+    constructor(){
+        this.app = express();
+    }
 
     initDb() {
         mongoose.connect(env.db.url, env.db.options);
@@ -15,13 +20,15 @@ export class Server {
 
     initServer() {
         try {
-            this.app = express();
             this.app.use(bodyParser.urlencoded({ extended: true }));
             this.app.use(bodyParser.json());
 
             // set the loggers
             this.app.use(defaultLogger);
             this.app.use(errorLogger);
+
+            // middleware that verify the security token extracted
+            this.app.use(tokenParser);
 
             // set the api routes
             registerRouters(this.app);

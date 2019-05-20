@@ -1,4 +1,3 @@
-import * as express from 'express';
 import {Server} from './server/server';
 
 const server = new Server();

@@ -1,5 +1,3 @@
-import * as express from 'express';
-
 const errorHandler = (err, req, res, next) => {
     switch(err.name){
         case 'MongoError':
