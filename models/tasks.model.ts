@@ -1,11 +1,17 @@
 import * as mongoose from 'mongoose';
 
 interface Task extends mongoose.Document{
+    _id: number,
     content: string,
     date: Date
 }
 
 const taskSchema = new mongoose.Schema({
+    _id:{
+        type: Number,
+        required: true,
+        sparse: true
+    },
     content:{
         type: String,
         required: true,
