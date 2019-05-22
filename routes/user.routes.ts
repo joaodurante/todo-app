@@ -1,3 +1,8 @@
+/**
+ * Set the routes to logged user
+ * export: Router of logged user
+ */
+
 import * as express from 'express';
 import { UserRoutes } from '../controllers/user.controller';
 

@@ -1,3 +1,8 @@
+/**
+ * Task interface and mongoose schema
+ * export: Task schema and interface
+ */
+
 import * as mongoose from 'mongoose';
 
 interface Task extends mongoose.Document{

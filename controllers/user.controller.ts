@@ -1,13 +1,21 @@
+/**
+ * export: Class containing methods to routes of logged user
+ */
+
 import * as httpErrors from 'httperrors';
+import * as mongoose from 'mongoose';
 import { Common } from '../common/common.class';
 import { User } from '../models/users.model';
 import { Task } from '../models/tasks.model';
 
-/**
- * TODO:
- * UpdateTask
- */
 export class UserRoutes extends Common {
+    model: mongoose.Model<User>;
+
+    constructor(){
+        super();
+        this.model = User;
+    }
+
     /* Validate the logged user */
     validateUser = (req, res, next) => {
         if (req.authenticated)
@@ -48,9 +56,14 @@ export class UserRoutes extends Common {
             if (req.body.date != undefined)
                 task.date = req.body.date;
             task._id = req.authenticated.tasks.length;
-
             req.authenticated.tasks.push(task);
-            await User.findOneAndUpdate({ _id: req.authenticated._id }, { $push: { tasks: task } }, options);
+
+            await this.model.findOneAndUpdate(
+                { _id: req.authenticated._id },
+                { $push: { tasks: task } },
+                options
+            );
+
             next();
         } catch (err) {
             next(err);
@@ -67,7 +80,7 @@ export class UserRoutes extends Common {
             this.updateId(req, index);
 
             if (removed){
-                await User.findOneAndUpdate(
+                await this.model.findOneAndUpdate(
                     { _id: req.authenticated._id },
                     { $set: { tasks: req.authenticated.tasks } },
                     options

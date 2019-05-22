@@ -1,3 +1,8 @@
+/**
+ * User interface and mongoose schema
+ * export: User schema and interface
+ */
+
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { Task, taskSchema } from './tasks.model';
@@ -42,14 +47,17 @@ const userSchema = new mongoose.Schema({
  * Use the statics approach if you want query the whole collection
 */
 
+/* Function to find a user by his email */
 userSchema.methods.findByEmail = function(email: string, projection?: string){
     return this.findOne({email: email}, projection);
 }
 
+/* Compare the password received by user and the password stored */
 userSchema.methods.matches = function(password: string): boolean {
     return bcrypt.compareSync(password, this.password);
 }
 
+/* Encrypt the password of the object received */
 const hashPassword = async (obj, next) => {
     try{
         let hash = await bcrypt.hash(obj.password, env.security.saltRounds);
@@ -60,6 +68,7 @@ const hashPassword = async (obj, next) => {
     }
 }
 
+/* Before saving a new document, make some adjustments */
 userSchema.pre('save', function(next){
     const user = this;
     if(user.isModified('password'))
@@ -68,6 +77,7 @@ userSchema.pre('save', function(next){
         next();
 })
 
+/* Before updating a document, make some adjustments */
 userSchema.pre('findOneAndUpdate', function(next){
     const user = this;
     if(user.getUpdate().password)

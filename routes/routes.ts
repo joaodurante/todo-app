@@ -1,3 +1,7 @@
+/**
+ * Function that register the routers to the express
+ */
+
 import * as express from 'express';
 import { usersRouter } from './users.routes';
 import { userRouter } from './user.routes';

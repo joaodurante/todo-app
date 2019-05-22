@@ -1,3 +1,8 @@
+/**
+ * Loggers functions
+ * export: defaultLogger, errorLogger
+ */
+
 import * as morgan from 'morgan';
 
 // default logs (ignore errors)

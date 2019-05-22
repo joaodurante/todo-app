@@ -1,9 +1,13 @@
+/**
+ * Authorization methods
+ * export: tokenParser and tokenRemove
+ */
+
 import * as jwt from 'jsonwebtoken';
-import * as httpErrors from 'httperrors';
 import { env } from '../common/environment';
 import { User } from '../models/users.model';
 
-// verify the token extracted
+/* verify the token extracted */
 const tokenParser = async (req, res, next) => {
     const token = extractToken(req);
     try{
@@ -17,6 +21,7 @@ const tokenParser = async (req, res, next) => {
     }
 }
 
+/* remove the authenticated object in the request when the token is not set */
 const tokenRemove = (req, res, next) => {
     try{
         if(extractToken(req) == undefined)
@@ -27,7 +32,7 @@ const tokenRemove = (req, res, next) => {
     }
 }
 
-// extract the token from header
+/* extract the token from header */
 const extractToken = (req): string | undefined => {
     let auth = req.header('authorization');
     if(auth){
@@ -39,7 +44,7 @@ const extractToken = (req): string | undefined => {
     return undefined;
 }
 
-//get the user from db and put it in the request
+/* get the user from db and put it in the request */
 const applyBearer = async (req, next, decoded) => {
     try{
         if(decoded){
