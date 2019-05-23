@@ -11,7 +11,7 @@ import { User } from '../models/users.model';
 
 
 export class UsersRoutes extends Common{
-    model: mongoose.Model<User>;
+    model: mongoose.Model<any>;
 
     constructor(){
         super();
@@ -29,7 +29,7 @@ export class UsersRoutes extends Common{
     /* Find all registered users */
     findAll = async (req, res, next) => {
         try{
-            let documents = await this.model.find();
+            let documents = await User.find();
             this.render(res, next, documents);
         }catch(err){
             next(err);
@@ -83,8 +83,7 @@ export class UsersRoutes extends Common{
             if(user && user.matches(req.body.password)){
                 const token = jwt.sign(
                     {sub: user._id, iss: env.application.name},
-                    env.security.apiSecret,
-                    {expiresIn: '24h'}
+                    env.security.apiSecret
                 );
 
                 res.json({ name: user.name, email: user.email, accessToken: token });
@@ -99,8 +98,7 @@ export class UsersRoutes extends Common{
     authorize = (req, res, next) => {
         if(req.authenticated !== undefined)
             next();
-        else{
+        else
             throw new httpErrors.Forbidden('You are not allowed to do this!');
-        }
     }
 }

@@ -1,4 +1,4 @@
-import {Server} from './server/server';
+import { Server } from './server/server';
 
 const server = new Server();
 try{
@@ -8,4 +8,4 @@ try{
     process.exit(1);
 }
 
-export {server};
+export { server };

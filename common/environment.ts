@@ -19,5 +19,14 @@ export const env = {
     },
     application:{
         name: 'toDo-app'
+    },
+    jest:{
+        port: process.env.TEST_SERVER_PORT || 3001,
+        db_url: process.env.TEST_DB_URL || 'mongodb://localhost:27017/todo-test',
+        user_test:{
+            name: 'user-test',
+            email: 'user-test@test.com',
+            password: 'user-test-password'
+        }
     }
 }

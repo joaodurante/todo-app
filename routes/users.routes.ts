@@ -10,7 +10,7 @@ const router = express.Router();
 const mRoutes = new UsersRoutes();
 
 router.post('/authenticate', mRoutes.authenticate);
-router.get('/', [mRoutes.authorize, mRoutes.findAll]);
+router.get('/', mRoutes.findAll);
 router.get('/:_id', [mRoutes.validateId, mRoutes.findOne]);
 router.post('/', mRoutes.insert);
 router.delete('/:_id', [mRoutes.validateId, mRoutes.findAndDelete]);
