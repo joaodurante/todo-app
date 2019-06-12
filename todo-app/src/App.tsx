@@ -1,19 +1,18 @@
 import React from 'react';
-import { Header } from './components/Header';
-import { Sidebar } from './components/SideBar';
-import { Content } from './components/Content';
-import { Footer } from './components/Footer';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Home } from './components/Home/Home';
+import { Authenticate } from './components/Authenticate/Authenticate';
 
 export default class App extends React.Component {
   render() {
     return (
-      <div>
-        <Header/>
-        <Sidebar/>
-        <Content/>
-        <Footer/>
-      </div>
-    );
-  }
-}
-
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact={true} component={Home} />
+          <Route path="/auth" component={Authenticate} />
+        </Switch>
+      </BrowserRouter>
+        );
+      }
+    }
+    

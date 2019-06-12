@@ -5,7 +5,7 @@ export class Footer extends React.Component{
         return(
             <footer className="main-footer">
                 <strong>Copyright © 2019 <a href="#">João Pedro Durante</a>.</strong>
-                " All rights reserved."
+                All rights reserved.
             </footer>
         );
     }
