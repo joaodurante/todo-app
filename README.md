@@ -8,3 +8,4 @@ A simple todo list app
 * Express
 * Mongoose
 * ReactJS
+* AdminLTE
