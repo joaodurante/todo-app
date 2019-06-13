@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import { env } from '../common/environment';
 import { registerRouters } from '../routes/routes';
 import { defaultLogger, errorLogger } from '../common/logger';
@@ -20,6 +21,11 @@ export class Server {
 
     initServer() {
         try {
+            this.app.options('*', cors())
+            this.app.use(cors({
+                allowedHeaders: ['Content-Type', 'Authorization']
+            }));
+
             this.app.use(bodyParser.urlencoded({ extended: true }));
             this.app.use(bodyParser.json());
 

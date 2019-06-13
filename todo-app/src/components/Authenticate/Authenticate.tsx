@@ -21,11 +21,11 @@ export class Authenticate extends React.Component<IProps, IState>{
     render(){
         const isLogin = this.state.isLogin;
         return(
-            <body className="hold-transition login-page">
+            <div className="hold-transition login-page">
                 {isLogin
                     ? (<Login handler={this.handleLogin}/>) 
                     : (<Register handler={this.handleLogin}/>)}
-            </body>
+            </div>
         )
     }
 }
