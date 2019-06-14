@@ -1,26 +1,26 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Inbox } from '../Tasks/Inbox';
+import { Completed } from '../Tasks/Completed';
+import { Today } from '../Tasks/Today';
 
-export class Content extends React.Component{
-    constructor(props: Readonly<{}>){
+interface IProps{
+    task: number
+}
+
+export class Content extends React.Component<IProps> {
+    constructor(props: Readonly<IProps>) {
         super(props);
-        this.setState({filter: 'inbox'});
     }
-    
-    render(){
-        return(
-            <div className="content-wrapper">
-                <section className="content-header">
-                    <BrowserRouter>
-                        <Switch>
-                            {/* <Route path="/" exact={true} component={} />
-                            <Route path="/today" component={} />
-                            <Route path="/done" component={} /> */}
-                        </Switch>
-                    </BrowserRouter>
-                </section>
-                <section className="content container-fluid"></section>
-            </div>
-        );
+
+    render() {
+        switch(this.props.task){
+            case 0:
+                return(<Inbox/>)
+            case 1:
+                return(<Today/>)
+            case 2:
+                return(<Completed/>)
+        }
     }
 }

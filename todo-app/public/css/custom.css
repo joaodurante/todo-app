@@ -1,9 +1,12 @@
-html, body{
-    height: 100%;
-    background: #d2d6de;
+html { height: 100% !important; }
+body { height: 100% !important; padding-bottom: 0px}
+
+#root{
+    background: #ecf0f5
 }
 
+.main-footer { position: fixed; left: 0; right: 0; bottom: 0; }
 .login-page{
-    background: #d2d6de;
+    background: #ecf0f5;
     height: 100%
 }
