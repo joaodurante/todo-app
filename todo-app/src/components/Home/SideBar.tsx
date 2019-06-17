@@ -1,20 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface IProps{
-    task: number,
-    handleClick: Array<any>
+    match: any
 }
-/**
- * this.props.task === 0 -> Inbox content
- * this.props.task === 1 -> Today content
- * this.props.task === 2 -> Completed content
- * this.props.handleClick[ X ] -> task = X
- */
 
-export class Sidebar extends React.Component<IProps>{
+interface IState{
+    active: number
+}
+
+export class Sidebar extends React.Component<IProps, IState>{
     constructor(props: Readonly<IProps>){
         super(props);
+        this.state = {active: 0};
     }
+
+    handleClickInbox = () => {
+        this.setState({active: 0});
+    }
+
+    handleClickToday = () => {
+        this.setState({active: 1});
+    }
+
+    handleClickCompleted = () => {
+        this.setState({active: 2});
+    }
+
 
     render(){
         return(
@@ -23,25 +35,25 @@ export class Sidebar extends React.Component<IProps>{
                     <ul className="sidebar-menu tree" data-widget="tree">
                         <li className="header">MENU</li>
 
-                        <li className={this.props.task === 0 ? 'active' : ''}>
-                            <a href="#" onClick={this.props.handleClick[0]}>
+                        <li className={this.state.active === 0 ? 'active' : ''}>
+                            <Link to={`${this.props.match.path}`}  onClick={this.handleClickInbox}>
                                 <i className="fa fa-th"></i>
                                 <span>Inbox</span>
-                            </a>
+                            </Link>
                         </li>
 
-                        <li className={this.props.task === 1 ? 'active' : ''}>
-                            <a href="#" onClick={this.props.handleClick[1]}>
+                        <li className={this.state.active === 1 ? 'active' : ''}>
+                            <Link to={`${this.props.match.path}/today`} onClick={this.handleClickToday}>
                                 <i className="fa fa-calendar-o"></i>
                                 <span>Today</span>
-                            </a>
+                            </Link>
                         </li>
 
-                        <li className={this.props.task === 2 ? 'active' : ''}>
-                            <a href="#" onClick={this.props.handleClick[2]}>
+                        <li className={this.state.active === 2 ? 'active' : ''}>
+                            <Link to={`${this.props.match.path}/completed`}  onClick={this.handleClickCompleted}>
                                 <i className="fa fa-check"></i>
                                 <span>Completed</span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </section>
