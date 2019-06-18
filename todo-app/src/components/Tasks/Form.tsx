@@ -27,7 +27,7 @@ export class Form extends React.Component {
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-info pull-right">Sign in</button>
+                        <button type="submit" className="btn btn-default pull-right">Submit</button>
                     </div>
                 </form>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from './Form';
+import { List } from './List';
 
 export class Inbox extends React.Component {
     render() {
@@ -14,6 +15,7 @@ export class Inbox extends React.Component {
 
                 <section className="content container-fluid">
                     <Form/>
+                    <List/>
                 </section>
             </div>
         );
