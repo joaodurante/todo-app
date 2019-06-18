@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form } from './Form';
 
 export class Inbox extends React.Component {
     render() {
@@ -12,7 +13,7 @@ export class Inbox extends React.Component {
                 </section>
 
                 <section className="content container-fluid">
-                    
+                    <Form/>
                 </section>
             </div>
         );
