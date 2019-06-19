@@ -94,6 +94,27 @@ export class UserRoutes extends Common {
         }
     }
 
+    completeTask = async (req, res, next) => {
+        const options = { new: true, useFindAndModify: false, runValidators: true };
+        try{
+            let idTask = parseInt(req.params._id);
+            let task: Task = req.authenticated.tasks.find(task => task._id == idTask);
+            if(task){
+                task.done = true;
+                await this.model.findOneAndUpdate(
+                    {_id: req.authenticated._id},
+                    {$set: {tasks: req.authenticated.tasks}},
+                    options
+                );
+            }else
+                throw new httpErrors.NotFound('The thing you tried to update does not exists!');
+            
+            next();
+        }catch(err){
+            next(err);
+        }
+    }
+
     /* Update task id when one of them has been deleted */
     updateId = (req, index) => {
         for (index; index < req.authenticated.tasks.length; index++)

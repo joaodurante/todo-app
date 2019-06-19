@@ -8,7 +8,8 @@ import * as mongoose from 'mongoose';
 interface Task extends mongoose.Document{
     _id: number,
     content: string,
-    date: Date
+    date: Date,
+    done: boolean
 }
 
 const taskSchema = new mongoose.Schema({
