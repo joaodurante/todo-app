@@ -28,3 +28,11 @@ body { height: 100% !important; padding-bottom: 0px}
 .check-icon:hover{
     opacity:100
 }
+
+.date-text {
+    color: #969696
+}
+
+.date-text:hover{
+    color: #606060
+}
