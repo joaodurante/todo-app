@@ -20,7 +20,7 @@ export class Authenticate extends React.Component<IProps, IState>{
         this.setState({ isLogin: !this.state.isLogin });
     }
 
-    submit = (url: String, data: any) => {
+    submit = async (url: String, data: any) => {
         try{
             const options = {
                 method: 'POST',
@@ -30,10 +30,14 @@ export class Authenticate extends React.Component<IProps, IState>{
                     'Accept': 'application/json'
                 }
             }
-            fetcher(url, options).then(res => {
-                if(res.ok)
-                    localStorage.setItem(env.security.userKey, JSON.stringify(res.body));
-            });
+            let res = await fetcher(url, options);
+            if(res.ok){
+                let data: any = await res.json();
+                localStorage.setItem(env.security.userKey, data.accessToken);
+            }
+            else
+                console.log(`Request rejected with status ${res.status}`);
+        
         }catch(err){
             console.log(err);
         }
@@ -44,7 +48,7 @@ export class Authenticate extends React.Component<IProps, IState>{
         return (
             <div className="hold-transition login-page">
                 {isLogin
-                    ? (<Login handler={this.handleLogin} />)
+                    ? (<Login handler={this.handleLogin} submit={this.submit} />)
                     : (<Register handler={this.handleLogin} />)}
             </div>
         )
