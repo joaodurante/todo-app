@@ -83,10 +83,10 @@ export class UsersRoutes extends Common{
             if(user && user.matches(req.body.password)){
                 const token = jwt.sign(
                     {sub: user._id, iss: env.application.name},
-                    env.security.apiSecret
+                    env.security.apiSecret,
+                    {expiresIn: '365d'}
                 );
-
-                res.json({ name: user.name, email: user.email, accessToken: token });
+                res.json({ accessToken: token });
             }else
                 return next(new httpErrors.Forbidden('Invalid credentials'));
         }catch(err){

@@ -4,7 +4,8 @@ export const env = {
     },
     security:{
         saltRounds: process.env.SALT_ROUNDS || 10,
-        apiSecret: process.env.API_SECRET || 'todo-secret'
+        apiSecret: process.env.API_SECRET || 'todo-secret',
+        userKey: 'user_token'
     },
     application:{
         name: 'toDo-app'

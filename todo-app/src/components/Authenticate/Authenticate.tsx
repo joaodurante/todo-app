@@ -1,6 +1,8 @@
 import React from 'react';
 import { Login } from './Login';
 import { Register } from './Register';
+import { env } from '../../common/environment';
+import { fetcher } from '../../common/fetch';
 
 interface IProps { }
 
@@ -16,6 +18,25 @@ export class Authenticate extends React.Component<IProps, IState>{
 
     handleLogin = () => {
         this.setState({ isLogin: !this.state.isLogin });
+    }
+
+    submit = (url: String, data: any) => {
+        try{
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+            fetcher(url, options).then(res => {
+                if(res.ok)
+                    localStorage.setItem(env.security.userKey, JSON.stringify(res.body));
+            });
+        }catch(err){
+            console.log(err);
+        }
     }
 
     render() {

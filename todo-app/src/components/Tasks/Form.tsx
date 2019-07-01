@@ -7,7 +7,9 @@ export class Form extends React.Component {
                 <div className="box-header">
                     <h3 className="box-title">New task</h3>
                     <div className="box-tools pull-right">
-                    <button type="button" className="btn btn-box-tool" data-widget="collapse"><i className="fa fa-minus"></i></button>
+                        <button type="button" className="btn btn-box-tool" data-widget="collapse" title="Collapse">
+                            <i className="fa fa-minus"></i>
+                        </button>
                     </div>
                 </div>
 
