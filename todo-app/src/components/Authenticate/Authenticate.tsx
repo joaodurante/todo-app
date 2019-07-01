@@ -1,3 +1,10 @@
+/**
+ * Authentication page component
+ * 
+ * handleLogin(): change the value (true/false) to switch between Signin or Signup components
+ * signIn(): send a request that contains email and password to signin
+ */
+
 import React from 'react';
 import { Login } from './Login';
 import { Register } from './Register';
@@ -20,7 +27,7 @@ export class Authenticate extends React.Component<IProps, IState>{
         this.setState({ isLogin: !this.state.isLogin });
     }
 
-    submit = async (url: String, data: any) => {
+    signIn = async (data: any) => {
         try{
             const options = {
                 method: 'POST',
@@ -30,7 +37,7 @@ export class Authenticate extends React.Component<IProps, IState>{
                     'Accept': 'application/json'
                 }
             }
-            let res = await fetcher(url, options);
+            let res = await fetcher('/users/authenticate', options);
             if(res.ok){
                 let data: any = await res.json();
                 localStorage.setItem(env.security.userKey, data.accessToken);
@@ -48,8 +55,8 @@ export class Authenticate extends React.Component<IProps, IState>{
         return (
             <div className="hold-transition login-page">
                 {isLogin
-                    ? (<Login handler={this.handleLogin} submit={this.submit} />)
-                    : (<Register handler={this.handleLogin} />)}
+                    ? (<Login handler={this.handleLogin} signIn={this.signIn} />)
+                    : (<Register handler={this.handleLogin} signIn={this.signIn} />)}
             </div>
         )
     }

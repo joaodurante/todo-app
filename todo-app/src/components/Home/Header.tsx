@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logout } from '../Authenticate/Logout';
 
 export class Header extends React.Component {
     render() {
@@ -30,9 +31,7 @@ export class Header extends React.Component {
                                             <a href="#" className="btn btn-default btn-flat">Profile</a>
                                         </div>
 
-                                        <div className="pull-right">
-                                            <a href="#" className="btn btn-default btn-flat">Sign Out</a>
-                                        </div>
+                                        <Logout />
                                     </li>
                                 </ul>
                             </li>

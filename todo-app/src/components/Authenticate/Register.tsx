@@ -1,8 +1,15 @@
+/**
+ * Register component
+ * 
+ * handleSubmit(): will post when the form is submitted and then call signIn
+ */
+
 import React from 'react';
 import { env } from '../../common/environment';
 
 interface IProps{
-    handler: any
+    handler: any,
+    signIn: any
 }
 
 export class Register extends React.Component<IProps>{
@@ -16,15 +23,18 @@ export class Register extends React.Component<IProps>{
             email: event.target.email.value,
             password: event.target.password.value
         }
-        const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-        fetch('/users', {
+        const options = {
             method: 'POST',
             body: JSON.stringify(data),
-            headers: headers
-        }).then(res => {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+
+        fetch('/users', options).then(res => {
             if(res.ok)
-                console.log(res.status);
+                this.props.signIn(data);
             else
                 console.log(`Request rejected with status ${res.status}`);
         }).catch(console.error);

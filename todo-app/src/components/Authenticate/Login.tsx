@@ -1,8 +1,14 @@
+/**
+ * Login component
+ * 
+ * handleLogin(): will call signIn when the form is submitted
+ */
+
 import React from 'react';
 
 interface IProps{
     handler: any,
-    submit: any
+    signIn: any
 }
 
 export class Login extends React.Component<IProps> {
@@ -19,7 +25,7 @@ export class Login extends React.Component<IProps> {
             email: event.target.email.value,
             password: event.target.password.value
         }
-        this.props.submit('/users/authenticate', data);
+        this.props.signIn(data);
     }
 
     render() {
