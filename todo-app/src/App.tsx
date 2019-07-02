@@ -3,15 +3,44 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Home } from './components/Home/Home';
 import { Authenticate } from './components/Authenticate/Authenticate';
 
-export default class App extends React.Component {
+interface IProps { }
+
+interface IState {
+    loggedIn: boolean
+}
+
+export default class App extends React.Component<IProps, IState>{
+  constructor(props: Readonly<IProps>){
+    super(props);
+    this.state = { loggedIn: false };
+  }
+
+  validateToken = () => {
+    let token = localStorage.getItem('accessToken');
+    if(token){
+      this.setState({ loggedIn: true });
+    }else
+      this.setState({ loggedIn: false });
+  }
+
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/app" component={Home} />
-          <Route path="/auth" component={Authenticate} />
+          <Route exact path="/" render={() => (
+            this.state.loggedIn ? ( <Redirect to="/app"/> ) : ( <Redirect to="/auth" /> )
+          )} />
+
+          <Route path="/app" render={(props) => 
+            <Home {...props} loggedIn={this.state.loggedIn} validateToken={this.validateToken}/>
+          } />
+
+          <Route path="/auth" render={(props) => 
+            <Authenticate {...props} loggedIn={this.state.loggedIn} validateToken={this.validateToken}/>
+          } />
+
         </Switch>
       </BrowserRouter>
-        );
-      }
-    }
+    );
+  }
+}
