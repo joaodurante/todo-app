@@ -27,23 +27,26 @@ export class Home extends React.Component<IProps, IState>{
     constructor(props: Readonly<IProps>){
         super(props);
     }
+
+    redirectWhenNotLogged = () => {
+        if(!this.props.loggedIn)
+            return <Redirect to="/auth" />
+    }
         
     render(){
-        if(!this.props.loggedIn)
-            return(<Redirect to="/auth" />)
-        else{
-            return(
-                <div>
-                    <Header/>
-                    <Sidebar match={this.props.match}/>
-                    <Switch>
-                        <Route path={`${this.props.match.path}`} exact component={Inbox}></Route>
-                        <Route path={`${this.props.match.path}/today`} component={Today}></Route>
-                        <Route path={`${this.props.match.path}/completed`} component={Completed}></Route>
-                    </Switch>
-                    <Footer/> 
-                </div>
-            );
-        }
+        return(
+            <div>
+                {this.redirectWhenNotLogged()}
+                <Header/>
+                <Sidebar match={this.props.match}/>
+                <Switch>
+                    <Route path={`${this.props.match.path}`} exact component={Inbox}></Route>
+                    <Route path={`${this.props.match.path}/today`} component={Today}></Route>
+                    <Route path={`${this.props.match.path}/completed`} component={Completed}></Route>
+                </Switch>
+                <Footer/> 
+            </div>
+        );
+        
     }
 }

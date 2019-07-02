@@ -12,15 +12,18 @@ interface IState {
 export default class App extends React.Component<IProps, IState>{
   constructor(props: Readonly<IProps>){
     super(props);
-    this.state = { loggedIn: false };
+    this.state = { loggedIn: this.validateToken() };
   }
 
   validateToken = () => {
     let token = localStorage.getItem('accessToken');
     if(token){
       this.setState({ loggedIn: true });
-    }else
+      return true;
+    }else{
       this.setState({ loggedIn: false });
+      return false;
+    }
   }
 
   render() {

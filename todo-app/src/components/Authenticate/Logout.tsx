@@ -6,15 +6,16 @@
 
 import React from 'react';
 
-export class Logout extends React.Component {
+export class Logout extends React.Component{
     handleLogout = () => {
         localStorage.removeItem('accessToken');
-    }    
+        window.location.reload();
+    }
 
     render() {
         return (
             <div className="pull-right">
-                <a href="#" className="btn btn-default btn-flat" onClick={this.handleLogout}>Sign Out</a>
+                <a className="btn btn-default btn-flat" onClick={this.handleLogout}>Sign Out</a>
             </div>
         )
     }

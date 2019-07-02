@@ -58,19 +58,21 @@ export class Authenticate extends React.Component<IProps, IState>{
         }
     }
 
-    render() {
+    redirectWhenLogged = () => {
         if(this.props.loggedIn)
-            return(<Redirect to="/app" />);
-
-        else{
-            const loginMode = this.state.loginMode;
-            return (
-                <div className="hold-transition login-page">
-                    {loginMode
-                        ? (<Login handler={this.handleLogin} signIn={this.signIn} />)
-                        : (<Register handler={this.handleLogin} signIn={this.signIn} />)}
-                </div>
-            )
-        } 
+            return <Redirect to="/app" />
     }
+
+    render() {
+        const loginMode = this.state.loginMode;
+        return (
+            <div className="hold-transition login-page">
+                {this.redirectWhenLogged()}
+                {loginMode
+                    ? (<Login handler={this.handleLogin} signIn={this.signIn} />)
+                    : (<Register handler={this.handleLogin} signIn={this.signIn} />)}
+            </div>
+        )
+    } 
+    
 }
