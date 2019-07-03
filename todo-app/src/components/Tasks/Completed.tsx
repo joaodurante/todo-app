@@ -1,6 +1,10 @@
 import React from 'react';
 
-export class Completed extends React.Component {
+interface IProps{
+    user:any
+}
+
+export class Completed extends React.Component<IProps> {
     render() {
         return (
             <div className="content-wrapper">

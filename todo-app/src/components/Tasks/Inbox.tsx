@@ -2,7 +2,11 @@ import React from 'react';
 import { Form } from './Form';
 import { List } from './List';
 
-export class Inbox extends React.Component {
+interface IProps{
+    user: any
+}
+
+export class Inbox extends React.Component<IProps> {
     render() {
         return (
             <div className="content-wrapper">
@@ -14,8 +18,8 @@ export class Inbox extends React.Component {
                 </section>
 
                 <section className="content container-fluid">
-                    <Form/>
-                    <List/>
+                    <Form />
+                    <List tasks={this.props.user.tasks}/>
                 </section>
             </div>
         );

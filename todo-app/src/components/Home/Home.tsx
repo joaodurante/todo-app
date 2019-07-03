@@ -65,9 +65,17 @@ export class Home extends React.Component<IProps, IState>{
                 <Header user={this.state.user}/>
                 <Sidebar match={this.props.match}/>
                 <Switch>
-                    <Route path={`${this.props.match.path}`} exact component={Inbox}></Route>
-                    <Route path={`${this.props.match.path}/today`} component={Today}></Route>
-                    <Route path={`${this.props.match.path}/completed`} component={Completed}></Route>
+                    <Route exact path={`${this.props.match.path}`} render={(props) => 
+                        <Inbox {...props} user={this.state.user} />
+                    } />
+                    
+                    <Route path={`${this.props.match.path}/today`} render={(props) => 
+                        <Today {...props} user={this.state.user} />
+                    } />
+
+                    <Route path={`${this.props.match.path}/completed`} render={(props) => 
+                        <Completed {...props} user={this.state.user} />
+                    } />
                 </Switch>
                 <Footer/> 
             </div>
