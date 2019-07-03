@@ -7,6 +7,7 @@ import * as mongoose from 'mongoose';
 import { Common } from '../common/common.class';
 import { User } from '../models/users.model';
 import { Task } from '../models/tasks.model';
+import { env } from '../common/environment';
 
 export class UserRoutes extends Common {
     model: mongoose.Model<User>;
@@ -22,6 +23,10 @@ export class UserRoutes extends Common {
             next();
         else
             next(new httpErrors.Forbidden('You are not allowed to do this!'));
+    }
+
+    getUser = async (req, res, next) => {
+        this.render(res, next, req.authenticated);
     }
 
     /* Get all the not completed tasks */

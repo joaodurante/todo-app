@@ -86,7 +86,7 @@ export class UsersRoutes extends Common{
                     env.security.apiSecret,
                     {expiresIn: '365d'}
                 );
-                res.json({ accessToken: token });
+                res.json({ accessToken: token, _id: user._id });
             }else
                 return next(new httpErrors.Forbidden('Invalid credentials'));
         }catch(err){

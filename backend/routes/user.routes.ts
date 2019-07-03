@@ -9,8 +9,9 @@ import { UserRoutes } from '../controllers/user.controller';
 const router = express.Router();
 const mRoutes = new UserRoutes();
 
-router.get('/', [mRoutes.validateUser, mRoutes.getAllTasks]);
-router.post('/', [mRoutes.validateUser, mRoutes.createTask, mRoutes.getAllTasks]);
+router.get('/', [mRoutes.validateUser, mRoutes.getUser]);
+router.get('/task', [mRoutes.validateUser, mRoutes.getAllTasks]);
+router.post('/task', [mRoutes.validateUser, mRoutes.createTask, mRoutes.getAllTasks]);
 router.patch('/task/:_id', [mRoutes.validateUser, mRoutes.completeTask, mRoutes.getAllTasks]);
 router.delete('/:_id', [mRoutes.deleteTask, mRoutes.getAllTasks]);
 

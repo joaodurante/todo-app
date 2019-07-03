@@ -49,8 +49,9 @@ const applyBearer = async (req, next, decoded) => {
     try{
         if(decoded){
             let user = await User.findById(decoded.sub);
-            if(user)
+            if(user){
                 req.authenticated = user;
+            }
         }
     }catch(err){
         next(err);
