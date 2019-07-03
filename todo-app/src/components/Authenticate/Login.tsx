@@ -12,10 +12,6 @@ interface IProps{
 }
 
 export class Login extends React.Component<IProps> {
-    constructor(props: Readonly<IProps>){
-        super(props);
-    }
-
     handleLogin = (event: any) => {
         event.preventDefault();
         if(!event.target.checkValidity())

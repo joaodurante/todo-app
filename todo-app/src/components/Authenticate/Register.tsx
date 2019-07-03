@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-import { env } from '../../common/environment';
 
 interface IProps{
     handler: any,

@@ -1,15 +1,13 @@
-import { env } from './environment';
-
 function updateOptions(options: any) {
     const update = { ...options };
-    if(localStorage.accessToken != undefined && localStorage.accessToken != {}){
+    if(localStorage.accessToken !== undefined && localStorage.accessToken !== {}){
         update.headers = {
             ...update.headers,
             Authorization: `Bearer ${localStorage.accessToken}`
         };
     }else{
-        if(update.headers.accessToken != undefined && update.headers.accessToken != '')
-            update.headers.accessToken = '';
+        if(update.headers.accessToken !== undefined && update.headers.accessToken !== '')
+            update.headers.accessToken = undefined;
     }
     return update;
 }

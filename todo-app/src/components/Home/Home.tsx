@@ -1,6 +1,7 @@
 /**
  * Home page component
  * 
+ * redirectWhenNotLogged: will check the loggedIn props, if it's false, will redirect to auth page
  * props.match: contain some useful values like url path
  * props.loggedIn: boolean that indicates if the user is logged in
  * props.validateToken: function that will validate the token stored in LocalStorage
@@ -14,6 +15,7 @@ import { Footer } from './Footer';
 import { Inbox } from '../Tasks/Inbox';
 import { Completed } from '../Tasks/Completed';
 import { Today } from '../Tasks/Today';
+import { fetcher } from '../../common/fetch';
 
 interface IProps{
     match: any,
@@ -21,23 +23,46 @@ interface IProps{
     validateToken: any
 }
 
-interface IState{}
+interface IState{
+    user: any;
+}
 
 export class Home extends React.Component<IProps, IState>{
     constructor(props: Readonly<IProps>){
         super(props);
+        this.state = { user: {} };
+        this.getUserData();
     }
 
     redirectWhenNotLogged = () => {
         if(!this.props.loggedIn)
             return <Redirect to="/auth" />
+        else
+            return false;
+    }
+
+    getUserData = async () => {
+        if(!this.redirectWhenNotLogged()){
+            let options = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+            let res = await fetcher('/user', options);
+            if(res.ok){
+                let data: any = await res.json();
+                this.setState({ user: data });
+            }
+        }
     }
         
     render(){
         return(
             <div>
                 {this.redirectWhenNotLogged()}
-                <Header/>
+                <Header user={this.state.user}/>
                 <Sidebar match={this.props.match}/>
                 <Switch>
                     <Route path={`${this.props.match.path}`} exact component={Inbox}></Route>

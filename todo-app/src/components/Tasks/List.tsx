@@ -32,10 +32,6 @@ interface IProps{
 }
 
 class Task extends React.Component<IProps>{
-    constructor(props: Readonly<IProps>){
-        super(props);
-    }
-
     render() {
         return(
             <tr>

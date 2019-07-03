@@ -1,11 +1,15 @@
 import React from 'react';
 import { Logout } from '../Authenticate/Logout';
 
-export class Header extends React.Component {
+interface IProps{
+    user: any
+}
+
+export class Header extends React.Component<IProps> {
     render() {
         return (
             <header className="main-header">
-                <a href="#" className="logo">
+                <a href="" className="logo">
                     <span className="logo-lg">
                         <b>toDo</b>App
                     </span>
@@ -19,11 +23,11 @@ export class Header extends React.Component {
                         <ul className="nav navbar-nav">
                             <li className="dropdown user user-menu">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <span>João Durante</span>
+                                    <span>Welcome {this.props.user.name}</span>
                                 </a>
                                 <ul className="dropdown-menu">
                                     <li className="user-header">
-                                        <p className="text-center">Joao Durante</p>
+                                        <p className="text-center">{this.props.user.name}</p>
                                     </li>
 
                                     <li className="user-footer">
