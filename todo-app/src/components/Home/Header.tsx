@@ -1,5 +1,6 @@
 import React from 'react';
 import { Logout } from '../Authenticate/Logout';
+import userimg from '../../assets/user-img.png';
 
 interface IProps{
     user: any
@@ -27,6 +28,7 @@ export class Header extends React.Component<IProps> {
                                 </a>
                                 <ul className="dropdown-menu">
                                     <li className="user-header">
+                                        <img src={userimg} className="img-circle" />
                                         <p className="text-center">{this.props.user.name}</p>
                                     </li>
 

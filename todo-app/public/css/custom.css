@@ -1,11 +1,28 @@
-html { height: 100% !important; }
-body { height: 100% !important; padding-bottom: 0px}
+html {
+    height: 100% !important;
+}
+
+body {
+    height: 100% !important; padding-bottom: 0px;
+}
 
 #root{
     background: #ecf0f5
 }
 
-.main-footer { position: fixed; left: 0; right: 0; bottom: 0; }
+.wrapper {
+    height: auto;
+    min-height: 100%
+}
+
+.content-wrapper{
+    height: auto
+}
+
+.main-footer { 
+    bottom: 0px;
+}
+
 .login-page{
     background: #ecf0f5;
     height: 100%
@@ -37,6 +54,7 @@ body { height: 100% !important; padding-bottom: 0px}
 .date-text:hover{
     color: #606060
 }
+
 button {
     outline-style: none !important;
 }

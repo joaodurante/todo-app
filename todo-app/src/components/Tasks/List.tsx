@@ -1,7 +1,21 @@
+/**
+ * List and Task components
+ * List component is the entire task list
+ * Task component is a single task
+ * 
+ * List.props.pending: flag that stores wheter the list consists of completed tasks or not
+ * List.props.tasks: array of tasks
+ * 
+ * Task.renderButton(): if props.pending is true, render the button to complete the task, else don't render
+ * Task.props.pending: flag that stores wheter the list consists of completed tasks or not
+ * Task.props.task: a single task element
+ */
+
 import React from 'react';
 
 interface IPropsList{
-    tasks: any[]
+    tasks: any[],
+    pending: boolean
 }
 
 export class List extends React.Component<IPropsList> {
@@ -19,7 +33,7 @@ export class List extends React.Component<IPropsList> {
                         <table className="table">
                             <tbody>
                                 {tasks.map(task => 
-                                    <Task task={task} />
+                                    <Task task={task} pending={this.props.pending} />
                                 )}
                             </tbody>
                         </table>
@@ -30,18 +44,27 @@ export class List extends React.Component<IPropsList> {
 }
 
 interface IPropsTask{
-    task: any
+    task: any,
+    pending: boolean
 }
 
 class Task extends React.Component<IPropsTask>{
-    render() {
-        return(
-            <tr>
+    renderButton = () => {
+        if(this.props.pending){
+            return(
                 <td className="pull-left">
                     <button type="button" className="btn btn-default btn-circle btn-sm">
                         <i className="fa fa-check check-icon"></i>
                     </button>
                 </td>
+            )
+        }
+    }
+
+    render() {
+        return(
+            <tr>
+                {this.renderButton()}
                 <td className="pull-left">
                     {this.props.task.content}
                 </td>

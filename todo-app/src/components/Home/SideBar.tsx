@@ -1,3 +1,14 @@
+/**
+ * Sidebar component
+ * 
+ * handleLoad(): check the url path to activate the right sidebar tab
+ * handleClickInbox(): when the Inbox tab is clicked, the state.active will flag 0
+ * handleClickToday(): when the Today tab is clicked, the state.active will flag 1
+ * handleClickCompleted(): when the Completed tab is clicked, the state.active will flag 2
+ * props.match: contain some useful values, like path
+ * state.active: flag that stores wich tab will be active
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +23,20 @@ interface IState{
 export class Sidebar extends React.Component<IProps, IState>{
     constructor(props: Readonly<IProps>){
         super(props);
-        this.state = {active: 0};
+        this.state = {active: this.handleLoad()};
+    }
+
+    handleLoad = () => {
+        switch(window.location.pathname){
+            case '/app':
+                return 0;
+            case '/app/today':
+                return 1;
+            case '/app/completed':
+                return 2;
+            default:
+                return 0;
+        }
     }
 
     handleClickInbox = () => {
@@ -26,7 +50,6 @@ export class Sidebar extends React.Component<IProps, IState>{
     handleClickCompleted = () => {
         this.setState({active: 2});
     }
-
 
     render(){
         return(
