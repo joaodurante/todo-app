@@ -1,6 +1,33 @@
 import React from 'react';
+import { fetcher } from '../../common/fetch';
+import { Redirect } from 'react-router-dom';
 
 export class Form extends React.Component {
+    handleSubmit = async (event: any) => {
+        event.preventDefault();
+        if(!event.target.checkValidity())
+            return;
+
+        const data = {
+            content: event.target.content.value,
+            date: event.target.date.value
+        }
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+
+        let res = await fetcher('/user/task', options);
+        if(res.status === 200){
+            window.location.reload();
+        }
+    }
+
     render() {
         return (
             <div className="box box-default" data-widget="box-widget">
@@ -12,26 +39,29 @@ export class Form extends React.Component {
                         </button>
                     </div>
                 </div>
-
-                <div className="box-body">
-                    <div className="col-sm-8">
-                        <div className="form-group">
-                            <input autoComplete="off" type="text" className="form-control" placeholder="Text" name="task"></input>
-                        </div>
-                    </div>
-                    <div className="col-sm-4">
-                        <div className="input-group date" data-provide="datepicker">
-                            <div className="input-group-addon">
-                                <i className="fa fa-calendar"></i>
+                <form onSubmit={this.handleSubmit} noValidate>
+                    <div className="box-body">
+                            <div className="col-sm-8">
+                                <div className="form-group has-feedback">
+                                    <input autoComplete="off" type="text" className="form-control" placeholder="Text" name="content" required></input>
+                                </div>
                             </div>
-                            <input type="text" className="form-control"></input>
-                        </div>
+                            <div className="col-sm-4">
+                                <div className="input-group date" data-provide="datepicker">
+                                    <div className="input-group-addon">
+                                        <i className="fa fa-calendar"></i>
+                                    </div>
+                                    <input autoComplete="off" type="text" className="form-control" name="date" placeholder="Schedule"></input>
+                                </div>
+                            </div>
+                        
                     </div>
-                </div>
+                    
+                    <div className="box-footer">
+                        <button type="submit" className="btn btn-default pull-right">Submit</button>
+                    </div>
+                </form>
                 
-                <div className="box-footer">
-                    <button type="submit" className="btn btn-default pull-right">Submit</button>
-                </div>
             </div>
         );
     }
