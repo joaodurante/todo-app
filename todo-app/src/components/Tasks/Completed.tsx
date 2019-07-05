@@ -22,7 +22,7 @@ export class Completed extends React.Component<IProps> {
                 filteredTasks.push(task);
         });
 
-        return <List tasks={filteredTasks} pending={false}/>
+        return <List tasks={filteredTasks} pending={false} today={false}/>
     }
 
     render() {

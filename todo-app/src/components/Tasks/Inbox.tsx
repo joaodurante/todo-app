@@ -22,7 +22,7 @@ export class Inbox extends React.Component<IProps> {
                 filteredTasks.push(task);
         });
 
-        return <List tasks={filteredTasks} pending={true}/>
+        return <List tasks={filteredTasks} pending={true} today={false}/>
     }
 
     render() {
