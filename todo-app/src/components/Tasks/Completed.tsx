@@ -1,28 +1,40 @@
 /**
  * Completed tasks component, list only the completed tasks
  * 
- * filterList(): apply a filter to select only the completed tasks
+ * getAllTasks(): method that send a request to get all the user tasks
  */
 
 import React from 'react';
-import { Form } from './Form';
 import { List } from './List';
+import { fetcher } from '../../common/fetch';
 
-interface IProps{
-    user:any,
+interface IProps{}
+interface IState{
+    tasks: any[]
 }
 
-export class Completed extends React.Component<IProps> {
-    filterList = () => {
-        let initialTasks = this.props.user.tasks || [];
-        let filteredTasks: any[] = [];
+export class Completed extends React.Component<IProps, IState> {
+    constructor(props: Readonly<IProps>){
+        super(props);
+        this.getAllTasks();
+        this.state = { tasks: [] };
         
-        initialTasks.map( function(task: any) {  
-            if(task.done === true)
-                filteredTasks.push(task);
-        });
+    }
 
-        return <List tasks={filteredTasks} pending={false} today={false}/>
+    getAllTasks = async () => {
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        let res = await fetcher('/user/task/completed', options);
+        if(res.ok){
+            let data: any = await res.json();
+            console.log(data);
+            this.setState({ tasks: data });
+        }
     }
 
     render() {
@@ -31,12 +43,12 @@ export class Completed extends React.Component<IProps> {
                 <section className="content-header">
                     <h1>
                         Completed
-                        <small>Completed tasks</small>
+                        <small>All the completed tasks</small>
                     </h1>
                 </section>
 
                 <section className="content">
-                    {this.filterList()}
+                    <List tasks={this.state.tasks} pending={false}/>
                 </section>
             </div>
         );

@@ -1,31 +1,52 @@
-import React from 'react';
-import { fetcher } from '../../common/fetch';
-import { Redirect } from 'react-router-dom';
+/**
+ * Form to create new tasks component
+ * 
+ * handleSubmit(): get the data from forms and call the props.CreateNewTask passing the data
+ * handleContentChange(): update the content form value
+ * handleDateChange(): update the date form value
+ * props.createNewTask: function that make a request to insert the new task
+ * state.content: value of content input
+ * state.date: value of date input
+ */
 
-export class Form extends React.Component {
+import React from 'react';
+
+interface IProps{
+    createNewTask: any
+}
+
+interface IState{
+    content: string,
+    date: string
+}
+
+export class Form extends React.Component<IProps, IState> {
+    constructor(props: Readonly<IProps>){
+        super(props);
+        this.state = {content: '', date: ''};
+    }
+
     handleSubmit = async (event: any) => {
         event.preventDefault();
         if(!event.target.checkValidity())
             return;
-
+        
         const data = {
             content: event.target.content.value,
             date: event.target.date.value
         }
+        this.setState({content: "", date: ""});
+        this.props.createNewTask(data);
+        
+    }
 
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }
 
-        let res = await fetcher('/user/task', options);
-        if(res.status === 200){
-            window.location.reload();
-        }
+    handleContentChange = (event: any) => {
+        this.setState({ content: event.value })
+    }
+
+    handleDateChange = (event: any) => {
+        this.setState({ date: event.value });
     }
 
     render() {
@@ -43,7 +64,8 @@ export class Form extends React.Component {
                     <div className="box-body">
                             <div className="col-sm-8">
                                 <div className="form-group has-feedback">
-                                    <input autoComplete="off" type="text" className="form-control" placeholder="Text" name="content" required></input>
+                                    <input autoComplete="off" type="text" onChange={this.handleContentChange} value={this.state.content}
+                                        className="form-control" placeholder="Text" name="content" required></input>
                                 </div>
                             </div>
                             <div className="col-sm-4">
@@ -51,7 +73,8 @@ export class Form extends React.Component {
                                     <div className="input-group-addon">
                                         <i className="fa fa-calendar"></i>
                                     </div>
-                                    <input autoComplete="off" type="text" className="form-control" name="date" placeholder="Schedule"></input>
+                                    <input autoComplete="off" type="text" onChange={this.handleDateChange} value={this.state.date}
+                                        className="form-control" name="date" placeholder="Schedule"></input>
                                 </div>
                             </div>
                         

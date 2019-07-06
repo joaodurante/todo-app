@@ -12,7 +12,6 @@ import React from 'react';
 interface IPropsTask {
     task: any,
     pending: boolean,
-    today: boolean
 }
 
 export class Task extends React.Component<IPropsTask>{
@@ -26,21 +25,6 @@ export class Task extends React.Component<IPropsTask>{
                 </td>
             )
         }
-    }
-
-    renderTemplate = () => {
-        return (
-            <tr>
-                {this.renderButton()}
-                <td className="pull-left">
-                    {this.props.task.content}
-                </td>
-                <td className="date-text pull-right">
-                    <i className="fa fa-calendar">&nbsp;&nbsp;</i>
-                    {this.formatDate(this.props.task.date)}
-                </td>
-            </tr>
-        )
     }
 
     formatDate = (date: string) => {
@@ -57,26 +41,18 @@ export class Task extends React.Component<IPropsTask>{
             return '';
     }
 
-    returnOnlyTodayTask = () => {
-        if(this.props.task != null){
-            const today = new Date();
-            const formatedTodayDate: string = ('0' + (today.getMonth() + 1)).slice(-2) + '/'
-                                            + ('0' + today.getDate()).slice(-2) + '/'
-                                            + (today.getFullYear());
-
-            const formatedTaskDate: string = this.formatDate(this.props.task.date);
-            
-            if (formatedTodayDate === formatedTaskDate)
-                return this.renderTemplate();
-        }
-            return null;
-    }
-
     render() {
-        if (!this.props.today)
-            return this.renderTemplate();
-        else
-            return this.returnOnlyTodayTask();
-
+        return (
+            <tr>
+                {this.renderButton()}
+                <td className="pull-left">
+                    {this.props.task.content}
+                </td>
+                <td className="date-text pull-right">
+                    <i className="fa fa-calendar">&nbsp;&nbsp;</i>
+                    {this.formatDate(this.props.task.date)}
+                </td>
+            </tr>
+        )
     }
 }

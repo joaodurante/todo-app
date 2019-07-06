@@ -11,7 +11,6 @@ import { Task } from './Task';
 interface IPropsList{
     tasks: any[],
     pending: boolean,
-    today: boolean
 }
 
 export class List extends React.Component<IPropsList> {
@@ -29,7 +28,7 @@ export class List extends React.Component<IPropsList> {
                         <table className="table">
                             <tbody>
                                 {tasks.map(task => 
-                                    <Task task={task} pending={this.props.pending} today={this.props.today} />
+                                    <Task task={task} pending={this.props.pending}/>
                                 )}
                             </tbody>
                         </table>

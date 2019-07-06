@@ -1,22 +1,19 @@
+/**
+ * Today tasks component, render only the tasks of the actual day
+ */
+
 import React from 'react';
-import { Form } from './Form';
 import { List } from './List';
+import { Form } from './Form';
+import { AbstractContent } from './AbstractContent';
 
-interface IProps{
-    user:any
-}
+interface IProps{}
 
-export class Today extends React.Component<IProps> {
-    filterList = () => {
-        let initialTasks = this.props.user.tasks || [];
-        let filteredTasks: any[] = [];
-        
-        initialTasks.map( function(task: any) {  
-            if(task.done === false)
-                filteredTasks.push(task);
-        });
-
-        return <List tasks={filteredTasks} pending={true} today={true}/>
+export class Today extends AbstractContent {
+    constructor(props: Readonly<IProps>){
+        super(props);
+        this.state = { tasks: [], url: '/user/task/today' };
+        this.getAllTasks();
     }
 
     render() {
@@ -30,8 +27,8 @@ export class Today extends React.Component<IProps> {
                 </section>
 
                 <section className="content container-fluid">
-                    <Form />
-                    {this.filterList()}
+                    <Form createNewTask={this.createNewTask}/>
+                    <List tasks={this.state.tasks} pending={true}/>
                 </section>
             </div>
         );

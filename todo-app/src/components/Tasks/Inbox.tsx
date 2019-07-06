@@ -1,28 +1,19 @@
 /**
  * Inbox component, list all the pending tasks
- * 
- * filterList(): apply a filter to select only the pending tasks
  */
 
 import React from 'react';
+import { AbstractContent } from './AbstractContent';
 import { Form } from './Form';
 import { List } from './List';
 
-interface IProps{
-    user: any
-}
+interface IProps{}
 
-export class Inbox extends React.Component<IProps> {
-    filterList = () => {
-        let initialTasks = this.props.user.tasks || [];
-        let filteredTasks: any[] = [];
-        
-        initialTasks.map( function(task: any) {  
-            if(task.done === false)
-                filteredTasks.push(task);
-        });
-
-        return <List tasks={filteredTasks} pending={true} today={false}/>
+export class Inbox extends AbstractContent {
+    constructor(props: Readonly<IProps>){
+        super(props);
+        this.state = { tasks: [], url: '/user/task' };
+        this.getAllTasks();
     }
 
     render() {
@@ -36,8 +27,8 @@ export class Inbox extends React.Component<IProps> {
                 </section>
 
                 <section className="content container-fluid">
-                    <Form />
-                    {this.filterList()}
+                    <Form createNewTask={this.createNewTask}/>
+                    <List tasks={this.state.tasks} pending={true}/>
                 </section>
             </div>
         );

@@ -43,7 +43,7 @@ export class Home extends React.Component<IProps, IState>{
 
     getUserData = async () => {
         if(!this.redirectWhenNotLogged()){
-            let options = {
+            const options = {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,15 +66,15 @@ export class Home extends React.Component<IProps, IState>{
                 <Sidebar match={this.props.match}/>
                 <Switch>
                     <Route exact path={`${this.props.match.path}`} render={(props) => 
-                        <Inbox {...props} user={this.state.user} />
+                        <Inbox {...props} />
                     } />
                     
                     <Route path={`${this.props.match.path}/today`} render={(props) => 
-                        <Today {...props} user={this.state.user} />
+                        <Today {...props} />
                     } />
 
                     <Route path={`${this.props.match.path}/completed`} render={(props) => 
-                        <Completed {...props} user={this.state.user} />
+                        <Completed {...props} />
                     } />
                 </Switch>
                 <Footer/> 
