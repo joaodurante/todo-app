@@ -30,13 +30,17 @@ export class UserRoutes extends Common {
     }
 
     /* Get all the not completed tasks */
-    getAllTasks = (req, res, next) => {
-        let tasks: Task[] = [];
-        for (let i in req.authenticated.tasks) {
-            if (req.authenticated.tasks[i].done === false)
-                tasks.push(req.authenticated.tasks[i])
+    getAllTasks = async (req, res, next) => {
+        try {
+            let tasks = [];
+            for (let i in req.authenticated.tasks) {
+                if (req.authenticated.tasks[i].done === false)
+                    tasks.push(req.authenticated.tasks[i])
+            }
+            this.render(res, next, tasks);
+        } catch (err) {
+            next(err);
         }
-        this.render(res, next, tasks);
     }
 
     /* Get all the completed tasks */
@@ -45,10 +49,30 @@ export class UserRoutes extends Common {
             let tasks = [];
             for (let i in req.authenticated.tasks) {
                 if (req.authenticated.tasks[i].done === true)
-                    tasks.push(req.authenticated.tasks[i].task)
+                    tasks.push(req.authenticated.tasks[i])
             }
             this.render(res, next, tasks);
         } catch (err) {
+            next(err);
+        }
+    }
+
+    /* Get all the pending tasks of the actual day */
+    getAllTodayTasks = async (req, res, next) => {
+        try{
+            let tasks = [];
+            let date: Date = new Date();
+            date.setHours(0, 0, 0, 0);
+
+            for(let i in req.authenticated.tasks) {
+                if(req.authenticated.tasks[i].date && req.authenticated.tasks[i].done === false){
+                    if(req.authenticated.tasks[i].date.getTime() === date.getTime())
+                        tasks.push(req.authenticated.tasks[i]);
+                }
+            }
+            
+            this.render(res, next, tasks);
+        }catch(err){
             next(err);
         }
     }
