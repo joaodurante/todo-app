@@ -1,19 +1,35 @@
 /**
  * List component render the entire task list
  * 
- * List.props.pending: flag that stores wheter the list consists of completed tasks or not
- * List.props.tasks: array of tasks
+ * renderButton(): renders the completeButton, according to the value of the pending flag
+ * props.tasks: array of tasks
+ * props.pending: flag that stores wheter the list consists of completed tasks or not
+ * props.completeTask: optional property function that send a patch request to complete a specified task
  */
 
 import React from 'react';
 import { Task } from './Task';
 
-interface IPropsList{
+interface IProps{
     tasks: any[],
     pending: boolean,
+    completeTask?: any
 }
 
-export class List extends React.Component<IPropsList> {
+export class List extends React.Component<IProps> {
+    renderButton = (task: any) => {
+        if (this.props.pending) {
+            return (
+                <td className="pull-left">
+                    <button type="button" className="btn btn-default btn-circle btn-sm"
+                        onClick={() => this.props.completeTask(task._id)} >
+                        <i className="fa fa-check check-icon"></i>
+                    </button>
+                </td>
+            )
+        }
+    }
+
     render() {
         let tasks = this.props.tasks;
         if(!tasks)
@@ -28,7 +44,7 @@ export class List extends React.Component<IPropsList> {
                         <table className="table">
                             <tbody>
                                 {tasks.map(task => 
-                                    <Task task={task} pending={this.props.pending}/>
+                                    <Task key={task._id} task={task} renderButton={this.renderButton}/>
                                 )}
                             </tbody>
                         </table>

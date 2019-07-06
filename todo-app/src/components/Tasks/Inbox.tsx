@@ -28,7 +28,7 @@ export class Inbox extends AbstractContent {
 
                 <section className="content container-fluid">
                     <Form createNewTask={this.createNewTask}/>
-                    <List tasks={this.state.tasks} pending={true}/>
+                    <List tasks={this.state.tasks} pending={true} completeTask={this.completeTask}/>
                 </section>
             </div>
         );

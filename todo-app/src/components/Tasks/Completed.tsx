@@ -2,6 +2,7 @@
  * Completed tasks component, list only the completed tasks
  * 
  * getAllTasks(): method that send a request to get all the user tasks
+ * state.tasks: array of completed tasks
  */
 
 import React from 'react';
@@ -18,7 +19,6 @@ export class Completed extends React.Component<IProps, IState> {
         super(props);
         this.getAllTasks();
         this.state = { tasks: [] };
-        
     }
 
     getAllTasks = async () => {
@@ -32,7 +32,6 @@ export class Completed extends React.Component<IProps, IState> {
         let res = await fetcher('/user/task/completed', options);
         if(res.ok){
             let data: any = await res.json();
-            console.log(data);
             this.setState({ tasks: data });
         }
     }

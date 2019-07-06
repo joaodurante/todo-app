@@ -28,7 +28,7 @@ export class Header extends React.Component<IProps> {
                                 </a>
                                 <ul className="dropdown-menu">
                                     <li className="user-header">
-                                        <img src={userimg} className="img-circle" />
+                                        <img src={userimg} className="img-circle" alt="User"/>
                                         <p className="text-center">{this.props.user.name}</p>
                                     </li>
 

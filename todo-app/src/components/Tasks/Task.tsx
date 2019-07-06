@@ -9,23 +9,13 @@
 
 import React from 'react';
 
-interface IPropsTask {
+interface IProps {
     task: any,
-    pending: boolean,
+    renderButton: any
 }
 
-export class Task extends React.Component<IPropsTask>{
-    renderButton = () => {
-        if (this.props.pending) {
-            return (
-                <td className="pull-left">
-                    <button type="button" className="btn btn-default btn-circle btn-sm">
-                        <i className="fa fa-check check-icon"></i>
-                    </button>
-                </td>
-            )
-        }
-    }
+export class Task extends React.Component<IProps>{
+    
 
     formatDate = (date: string) => {
         if (date) {
@@ -44,7 +34,7 @@ export class Task extends React.Component<IPropsTask>{
     render() {
         return (
             <tr>
-                {this.renderButton()}
+                {this.props.renderButton(this.props.task)}
                 <td className="pull-left">
                     {this.props.task.content}
                 </td>
