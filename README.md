@@ -1,6 +1,6 @@
 # toDo Project
 
-A simple todo list app
+A user-based task list application
 
 ## Built with
 * Typescript
